@@ -14,7 +14,6 @@ DEST_DB = 'database/destinations_database.csv'
 NUM_DB = 'database/numbers_database.csv'
 DRV_DB = 'database/driver_database.csv'
 
-1
 
 #################################################################################
 # Main Section
@@ -24,6 +23,8 @@ DRV_DB = 'database/driver_database.csv'
 # dest_db = 'database/destinations_database.csv'
 # num_db = 'database/numbers_database.csv'
 queue_dict = {}
+
+
 # with open(dest_db) as f:
 #     reader = csv.reader(f)
 #     header_row = next(reader)
@@ -55,14 +56,120 @@ queue_dict = {}
 # TODO Make each section its own .py file
 # TODO Run Pycharm's code analyzer
 
-def delete_entry(, entry):
-    id = int(input(strings.delete_driver_prompt))
-    # Load Driver from database
-    driver = csv_access.get_item(DRV_DB, drv_id)
-    print(driver)
-    entry = int(input(strings.delete_driver_final))
-    if entry == 1:
-        csv_access.delete_item(DRV_DB, drv_id)
+def show_all_entities(entity_type, database_path):
+    """
+    Shows all entities saved within a CSV file
+    :param entity_type:
+    :param database_path:
+    :return:
+    """
+    plural = entity_type + 's'
+    entities = csv_access.get_all_items(database_path)
+    if entity_type == "Driver":
+        print(strings.all_drivers)
+    else:
+        print(strings.all_entities.format(entities=plural, Entity=entity_type))
+    for entity_id, entity in entities.items():
+        print(entity_id, ' : ', entity)
+    input(strings.continue_prompt)
+
+
+def add_entity(entity_type, database_path):
+    """
+    Adds an entity to a given database path
+    :param entity_type: Type of entity being edited; eg: driver, destination, customer number, used for format strings
+    :param database_path: Path of the database
+    :return:
+    """
+    # In order to make: driver -> drivers, destination -> destinations etc
+    plural = entity_type + "s"
+    entities = int(input(strings.entity_number.format(entities=plural)))
+    if entities > 0:
+        for i in range(entities):
+            if entity_type == "Driver":
+                f_name = input(strings.driver_name_prompt.format(cardinal="first"))
+                l_name = input(strings.driver_name_prompt.format(cardinal="last"))
+                model = input(strings.driver_vehicle_prompt.format(type="model"))
+                make = input(strings.driver_vehicle_prompt.format(type="make"))
+                car = f"{model}|{make}"
+                new_entity = [f_name, l_name, car, 0]
+            else:
+                new_entity = input(strings.new_entity_prompt.format(entity=entity_type))
+
+            confirmation = int(
+                input((strings.entity_confirm.format(entity=entity_type, action="add")) + f"\n{new_entity}"))
+            if confirmation == 1:
+                csv_access.insert_item(database_path, new_entity)
+                print(strings.add_success.format(new_entity=f"{new_entity}"))
+                print(strings.now_adding.format(entity=entity_type, entity_number=f"{i + 1}"))
+
+            else:
+                print(strings.cancel_confirm.format(entity=entity_type, action="add"))
+
+
+def edit_entity(entity_type, database_path):
+    """
+    Edits an entity in a given database
+    :param entity_type: Type of entity being edited; eg: driver, destination, customer number, used for format strings
+    :param database_path: Path of the database
+    """
+    entity_id = int(input(strings.id_prompt.format(entity=entity_type, action="edit")))
+    # Entity ID entered
+    if entity_id != 0:
+        # Load Entity from database
+        entity = csv_access.get_item(database_path, entity_id)
+        print(strings.entity_confirm.format(entity=entity_type, action="edit"))
+        print(entity)
+        if entity_type == "Driver":
+            entry = int(input(strings.edit_driver_select_prompt))
+            # Editing First Name
+            if entry == 1:
+                edit = strings.validate_reconfirmation("First Name")
+                entity[0] = edit
+                csv_access.edit_item(database_path, entity_id, entity)
+            # Editing Last Name
+            elif entry == 2:
+                edit = strings.validate_reconfirmation("Last Name")
+                entity[1] = edit
+                csv_access.edit_item(database_path, entity_id, entity)
+            # Editing Car Make|Model
+            elif entry == 3:
+                edit = strings.validate_reconfirmation("Car Make|Model")
+                entity[2] = edit
+                csv_access.edit_item(database_path, entity_id, entity)
+            # Editing Number of Trips Completed
+            elif entry == 4:
+                edit = strings.validate_reconfirmation("Number of Trips Completed")
+                entity[3] = edit
+                csv_access.edit_item(database_path, entity_id, entity)
+            # Editing Entire Driver
+            elif entry == 5:
+                edit = strings.validate_reconfirmation(
+                    "[First Name, Last Name, Vehicle, Number of Trips Completed]")
+                entity = edit
+                csv_access.edit_item(database_path, entity_id, entity)
+            print(strings.saved_confirmation)
+        else:
+            edit = strings.validate_reconfirmation(entity_type)
+            csv_access.edit_item(database_path, entity_id, edit)
+            print(strings.saved_confirmation)
+
+
+def delete_entry(entity_type, database_path):
+    """
+    Deletes an entity in a given database
+    :param entity_type: Type of entity being edited; eg: Driver, Destination. Used for format strings
+    :param database_path: Path of the database
+    :return:
+    """
+    entity_id = int(input(strings.id_prompt.format(entity=entity_type, action="delete")))
+    # Load Entity from database
+    entity = csv_access.get_item(database_path, entity_id)
+    print(entity)
+    # Confirm Delete
+    confirmation = int(input(strings.entity_confirm.format(entity=entity_type, action="delete")))
+    if confirmation == 1:
+        csv_access.delete_item(database_path, entity_id)
         print(strings.delete_confirmation)
 
 
@@ -87,19 +194,7 @@ if __name__ == '__main__':
 
                 # Add Driver(s)
                 elif entry == 2:
-                    drivers = int(input("Enter the number of drivers you would like to add:\n"))
-                    if drivers > 0:
-                        for i in range(drivers):
-                            f_name = input("Please enter the new driver's first name\n")
-                            l_name = input("Please enter the new driver's last name\n")
-                            model = input("Please enter the new driver's vehicle model\n")
-                            make = input("Please enter the new driver's vehicle make\n")
-                            car = f"{model}|{make}"
-                            new_driver = [f_name, l_name, car, 0]
-                            csv_access.insert_item(DRV_DB, new_driver)
-                            print(f"{new_driver} has been successfully added")
-                            print(f"Now adding Driver #{i + 1}")
-
+                    add_entity("Driver", DRV_DB)
                 # Edit Driver
                 elif entry == 3:
                     drv_id = int(input(strings.edit_driver_prompt))
@@ -247,13 +342,6 @@ if __name__ == '__main__':
                         print(strings.delete_confirmation)
 
                 break
-
-
-
-
-
-
-
 
         # # Makes new Availability Queues
         #

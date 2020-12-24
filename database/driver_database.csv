@@ -1,7 +1,9 @@
 id,f_name,l_name,car,trips_completed
-1,Alana,Thompson,Honda|Accord,2
-2,Clem,Francis,Honda|Civic,1
-3,Dwight,Muschette,Suzuki|Swift,1
-4,Shanis,Cato,Hyundai|Konda,3
-5,Canhao,Xu,Mercedez|Benz,888
-6,Kayvia,Harriott,Toyota|RAV4,0
+1,"['Alana', 'Thompson', 'Honda|Accord', '2']"
+2,"['Clem', 'Francis', 'Honda|Civic', '1']"
+3,"['Lord Dwight', 'Muschette', 'Suzuki|Swift', '1']"
+4,"['Shanis', 'Cato', 'Hyundai|Konda', '3']"
+6,"['Kayvia', 'Harriott', 'Toyota|RAV4', '0']"
+7,"['Shemar', 'Jones', 'Chevy|Spark', '0']"
+8,"['Samuel', 'Lowe', 'Bugatti|Veyron', '0']"
+9,"['Abigail', 'Simpson', 'Honda|Civic', '0']"

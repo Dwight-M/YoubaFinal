@@ -55,8 +55,11 @@ def insert_item(db, items):
 
     """
     i_item = [generate_new_id(db)]
-    for item in items:
-        i_item.append(item)
+    if isinstance(items, str):
+        i_item = [i_item[0], items]
+    else:
+        for item in items:
+            i_item.append(item)
     with open(db, 'a+', newline='') as write_obj:
         csv_writer = writer(write_obj)
         csv_writer.writerow(i_item)

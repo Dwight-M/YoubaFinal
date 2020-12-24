@@ -7,6 +7,23 @@ main_menu = f"{stars}" \
             f"\n{stars}" \
             "\n"
 
+
+# Generalised Strings
+continue_prompt = "Press ENTER to continue"
+saved_confirmation = "Changes have been saved"
+delete_confirmation = "Deletion complete"
+
+# Format Strings
+entity_number = "Please enter the number of {entities} you would like to add:\n"
+entity_confirm = "Please press 1 to confirm that this is the {entity} you wish to {action}:"
+id_prompt = "Please enter the ID of the {entity} you wish to {action}:" \
+                       " Or enter 0 to go back to the {entity} Menu\n"
+add_success = "{new_entity} has been successfully added\n"
+now_adding = "Now adding {entity} #{entity_number}\n"
+new_entity_prompt = "Please enter the name of the new {entity}\n"
+all_entities = "Here are all {entities} in the format:" \
+                  "\nID : {Entity}"
+cancel_confirm = "Cancelling {action}. Returning to {entity} menu\n"
 # Driver Strings
 driver_menu = f"{stars}" \
               "\n*   Welcome to the Driver Management Menu. Please select an action. Enter any other number to go back " \
@@ -16,11 +33,12 @@ driver_menu = f"{stars}" \
               "\n\t3. Edit Driver " \
               "\n\t4. Delete Driver " \
               "\n\n\t<-- Back\n"
-all_drivers_format = "Here are all drivers in the format:" \
+all_drivers = "Here are all drivers in the format:" \
                      "\nID : [First Name, Last Name, Vehicle, Number of Trips Completed]"
 
 edit_driver_prompt = "Please enter the ID of the driver you wish to change. Or enter 0 to go back to the Driver Menu\n"
 edit_driver_current = "This is the driver you are currently editing:"
+
 edit_driver_select_prompt = "What part of the driver would you like to edit " \
                             "\n1. First Name " \
                             "\n2. Last Name " \
@@ -29,10 +47,11 @@ edit_driver_select_prompt = "What part of the driver would you like to edit " \
                             "\n5. Entire Driver\n"
 delete_driver_prompt = "Please enter the ID of the driver you wish to delete." \
                        " Or enter 0 to go back to the Driver Menu\n"
-continue_prompt = "Press ENTER to continue"
-saved_confirmation = "Changes have been saved"
-delete_confirmation = "Deletion complete"
+
 delete_driver_final = "This is the driver you are about to delete. Press 1 to confirm, enter any key to go back"
+
+driver_name_prompt = "Please enter the new driver's {cardinal} name\n"
+driver_vehicle_prompt = "Please enter the new driver's vehicle {type}\n"
 delete_destination_final = \
     "This is the destination you are about to delete. Press 1 to confirm, enter any key to go back"
 
@@ -53,7 +72,7 @@ customers_menu = f"{stars}" \
                  "\n\t2. Add Customer Number" \
                  "\n\t3. Delete Customer Number" \
                  "\n\t4. Edit Customer Number"\
-                 "\n\n\t<-- Back"
+                 "\n\n\t<-- Back\n"
 all_dest_format = "Here are all destinations in the format:" \
                   "\nID : Location"
 rename_dest_prompt = "Please enter the ID of the destination you wish to change." \
