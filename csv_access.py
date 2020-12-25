@@ -54,12 +54,17 @@ def insert_item(db, items):
         items: A list containing the items to be inserted
 
     """
-    i_item = [generate_new_id(db)]
-    if isinstance(items, str):
-        i_item = [i_item[0], items]
-    else:
-        for item in items:
-            i_item.append(item)
+    # Try to convert incoming items to int. If possible, item must be a cell number, which will function as its ID
+    try:
+        items = int(items)
+        i_item = [items, 0]
+    except ValueError:
+        i_item = [generate_new_id(db)]
+        if not isinstance(items, list):
+            i_item = [i_item[0], items]
+        else:
+            for item in items:
+                i_item.append(item)
     with open(db, 'a+', newline='') as write_obj:
         csv_writer = writer(write_obj)
         csv_writer.writerow(i_item)
@@ -77,14 +82,16 @@ def get_item(db, item_id):
     """
     items = get_all_items(db)
     try:
+        int(items[item_id])
+        return [item_id, items.get(item_id)]
+    except ValueError:
         return items[item_id]
     except KeyError:
         pass
 
-
 def delete_item(db, item_id):
     """
-    Deletes a destination from the database
+    Deletes an item from the database
     Args:
         db: A path to the needed .csv file
         item_id: id of item to be deleted
@@ -109,9 +116,13 @@ def edit_item(db, item_id, edited_item):
 
     """
     items = get_all_items(db)
-    items[item_id] = edited_item
+    try:
+        int(edited_item[1])
+        items[item_id] = edited_item[1]
+        items[edited_item[0]] = items.pop(item_id)
+    except ValueError:
+        items[item_id] = edited_item
     rewrite_db(db, items)
-
 
 def rewrite_db(db, items):
     """

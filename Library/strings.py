@@ -20,7 +20,7 @@ id_prompt = "Please enter the ID of the {entity} you wish to {action}:" \
                        " Or enter 0 to go back to the {entity} Menu\n"
 add_success = "{new_entity} has been successfully added\n"
 now_adding = "Now adding {entity} #{entity_number}\n"
-new_entity_prompt = "Please enter the name of the new {entity}\n"
+new_entity_prompt = "Please enter the new {entity}\n"
 all_entities = "Here are all {entities} in the format:" \
                   "\nID : {Entity}"
 cancel_confirm = "Cancelling {action}. Returning to {entity} menu\n"
@@ -70,8 +70,8 @@ customers_menu = f"{stars}" \
                  " Enter any other number to go back to the main menu" \
                  "\n\t1. View All Customers' Numbers" \
                  "\n\t2. Add Customer Number" \
-                 "\n\t3. Delete Customer Number" \
-                 "\n\t4. Edit Customer Number"\
+                 "\n\t3. Edit Customer Number" \
+                 "\n\t4. Delete Customer Number" \
                  "\n\n\t<-- Back\n"
 all_dest_format = "Here are all destinations in the format:" \
                   "\nID : Location"
@@ -80,6 +80,16 @@ rename_dest_prompt = "Please enter the ID of the destination you wish to change.
 current_rename = "This is the destination you are currently renaming:"
 delete_dest_prompt = "Please enter the ID of the destination you wish to delete." \
                      " Or enter 0 to go back to the Driver Menu\n"
+
+edit_number_prompt = "Please enter the edited number\n"
+edit_failed_prompt = "Please enter the number of failed attempts\n"
+edit_number_all_prompt = "Please enter the changes in the format [number, failed attempts]\n"
+edit_number_select_prompt = "Which part of the number would you like to edit? " \
+                            "\n1. The number itself " \
+                            "\n2. Number of failed attempts " \
+                            "\n3. Everything\n"
+all_num_format = "Here are all customers' numbers in the format: "\
+                    "\nNumber : Failed Attempts"
 
 
 def validate_yesno_input():

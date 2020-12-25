@@ -15,6 +15,29 @@ NUM_DB = 'database/numbers_database.csv'
 DRV_DB = 'database/driver_database.csv'
 
 
+def make_av_queues():
+    destinations = csv_access.get_all_items(DEST_DB)
+    queue_dict = {}
+    for dest in destinations.items():
+        queue_dict[dest[0]] = queue.make_availability_queue(dest[1])
+    return queue_dict
+
+
+def add_to_av_queues():
+    av_queues = make_av_queues()
+    all_drivers = csv_access.get_all_items(DRV_DB)
+    for driver in all_drivers.values():
+        av_queues[random.randint(1, len(av_queues))][2].append(driver)
+    return av_queues
+
+
+queues = add_to_av_queues()
+
+
+for pair in queues.items():
+    print(pair)
+# {1: 'UWI', 2: 'Papine', 3: 'Liguanea', 4: 'Half-Way-Tree', 5: 'Montego Bay', 6: 'Spanish Town', 7: 'Gaza Nation'}
+
 #################################################################################
 # Main Section
 #################################################################################
@@ -22,7 +45,6 @@ DRV_DB = 'database/driver_database.csv'
 
 # dest_db = 'database/destinations_database.csv'
 # num_db = 'database/numbers_database.csv'
-queue_dict = {}
 
 
 # with open(dest_db) as f:
@@ -56,6 +78,7 @@ queue_dict = {}
 # TODO Make each section its own .py file
 # TODO Run Pycharm's code analyzer
 
+# Menu Functions
 def show_all_entities(entity_type, database_path):
     """
     Shows all entities saved within a CSV file
@@ -144,11 +167,25 @@ def edit_entity(entity_type, database_path):
                 csv_access.edit_item(database_path, entity_id, entity)
             # Editing Entire Driver
             elif entry == 5:
-                edit = strings.validate_reconfirmation(
+                entity = strings.validate_reconfirmation(
                     "[First Name, Last Name, Vehicle, Number of Trips Completed]")
-                entity = edit
                 csv_access.edit_item(database_path, entity_id, entity)
             print(strings.saved_confirmation)
+        elif entity_type == "Number":
+            entry = int(input(strings.edit_number_select_prompt))
+            # Editing number itself
+            if entry == 1:
+                edit = strings.validate_reconfirmation("New Number")
+                entity[0] = edit
+                csv_access.edit_item(database_path, entity_id, entity)
+            # Editing Number of Failed Trips
+            elif entry == 2:
+                edit = strings.validate_reconfirmation("Number of Failed Trips")
+                entity[1] = edit
+                csv_access.edit_item(database_path, entity_id, entity)
+            elif entry == 3:
+                entity = strings.validate_reconfirmation("[Number, Number of Failed Attempts]")
+                csv_access.edit_item(database_path, entity_id, entity)
         else:
             edit = strings.validate_reconfirmation(entity_type)
             csv_access.edit_item(database_path, entity_id, edit)
@@ -399,3 +436,7 @@ if __name__ == '__main__':
 
 #################################################################################
 #################################################################################
+
+# TODO:
+# 1. Use get all items to load all destination
+# 2. Generate a dictionary Availability List using those destinations: eg {1: [Mobay][], 2: [Spain][]}

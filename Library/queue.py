@@ -17,7 +17,6 @@ def make_availability_queue(location):
     a_queue = ("AvailabilityQueue", [])
     return a_queue
 
-
 def get_queue_contents(a_queue):
     """
     Gets Availability Queue contents
