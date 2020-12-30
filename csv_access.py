@@ -24,7 +24,6 @@ def get_all_items(db):
     """
     with open(db) as f:
         reader = csv.reader(f)
-        header_row = next(reader)
         items = {}
         for row in reader:
             if len(row) <= 2:
@@ -89,6 +88,7 @@ def get_item(db, item_id):
     except KeyError:
         pass
 
+
 def delete_item(db, item_id):
     """
     Deletes an item from the database
@@ -124,6 +124,7 @@ def edit_item(db, item_id, edited_item):
         items[item_id] = edited_item
     rewrite_db(db, items)
 
+
 def rewrite_db(db, items):
     """
     Rewrites the database given a dictionary. Note that this must be used to update or delete .csv files
@@ -140,3 +141,12 @@ def rewrite_db(db, items):
         csv_write.writerow(header)
         for item_row in items.items():
             csv_write.writerow(item_row)
+
+
+# def simple_write(db, items):
+#     """
+#     Simply writes to a CSV object
+#     :param db: A path to the needed csv file
+#     :param items: a dictionary of the items that will serve as the data within the csv
+#     """
+#

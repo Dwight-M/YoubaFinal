@@ -1,4 +1,14 @@
+import sys
+
 from Library import *
+import csv_access
+import random
+
+# Databases
+DEST_DB = 'database/destinations_database.csv'
+NUM_DB = 'database/numbers_database.csv'
+DRV_DB = 'database/driver_database.csv'
+
 
 def youba():
     """
@@ -10,22 +20,22 @@ def youba():
     Returns:
         None
     """
-    print(lines)
+    print(strings.stars)
     print("*   Currently, there are only 4 Destinations that we cover.\n*   There will be more in the Future.")
     print("*   They are: UWI, Papine, Liguanea & Half-Way-Tree.")
     # TODO Change format string to Fstrings
     print(f"*   The price per trip is {fare} \n*   Discounts will be add where necessary.")
 
-    print(lines)
+    print(strings.stars)
     print("*   Would you like to Request our services?")
     print("*   Enter 1 for Yes")
     print("*   Enter 0 for No\n")
-    request = validate_yesno_input()
+    request = strings.validate_yesno_input()
 
     if request != 1:
         print("*    Would you like to exit YOUBA?")
         print("Enter 0 again to quit")
-        cancel = validate_yesno_input()
+        cancel = strings.validate_yesno_input()
         if cancel == 0:
             sys.exit()
         request = 1

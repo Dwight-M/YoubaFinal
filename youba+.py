@@ -5,6 +5,7 @@ introducing a brand new way for travellers to connect with drivers. Users only n
 to have a cellphone to utilize the service. Given your knowledge of ADTs, Youba Ltd.
 has contracted you to implement the platform for their service.
 """
+import sys
 
 from Library import *
 import csv_access
@@ -13,6 +14,7 @@ import csv_access
 DEST_DB = 'database/destinations_database.csv'
 NUM_DB = 'database/numbers_database.csv'
 DRV_DB = 'database/driver_database.csv'
+AV_DB = 'database/av_queues_database.csv'
 
 
 def make_av_queues():
@@ -34,8 +36,7 @@ def add_to_av_queues():
 queues = add_to_av_queues()
 
 
-for pair in queues.items():
-    print(pair)
+csv_access.rewrite_db(AV_DB, queues)
 # {1: 'UWI', 2: 'Papine', 3: 'Liguanea', 4: 'Half-Way-Tree', 5: 'Montego Bay', 6: 'Spanish Town', 7: 'Gaza Nation'}
 
 #################################################################################
@@ -289,7 +290,7 @@ if __name__ == '__main__':
                 break
 
         # Destinations Menu
-        if entry == 2:
+        elif entry == 2:
             while True:
                 entry = int(input(strings.destinations_menu))
                 # Show all Destinations
