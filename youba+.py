@@ -6,6 +6,7 @@ to have a cellphone to utilize the service. Given your knowledge of ADTs, Youba 
 has contracted you to implement the platform for their service.
 """
 import sys
+import random
 
 from Library import *
 import csv_access
@@ -34,7 +35,7 @@ def add_to_av_queues():
 
 
 queues = add_to_av_queues()
-
+ 
 
 csv_access.rewrite_db(AV_DB, queues)
 # {1: 'UWI', 2: 'Papine', 3: 'Liguanea', 4: 'Half-Way-Tree', 5: 'Montego Bay', 6: 'Spanish Town', 7: 'Gaza Nation'}

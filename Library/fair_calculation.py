@@ -5,7 +5,7 @@
 # Calculates the discount for a customer
 
 # Function name too long, change to calc_dis
-
+import csv_access
 def calculate_discount(phone_num, passengers):
     """
     Calculates the discount to be applied for a customer

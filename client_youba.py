@@ -3,6 +3,8 @@ import sys
 from Library import *
 import csv_access
 import random
+import youba+
+
 
 # Databases
 DEST_DB = 'database/destinations_database.csv'
@@ -20,11 +22,14 @@ def youba():
     Returns:
         None
     """
+    passengers = get_all_items(NUM_DB)
+    price = 100
+    
     print(strings.stars)
     print("*   Currently, there are only 4 Destinations that we cover.\n*   There will be more in the Future.")
     print("*   They are: UWI, Papine, Liguanea & Half-Way-Tree.")
     # TODO Change format string to Fstrings
-    print(f"*   The price per trip is {fare} \n*   Discounts will be add where necessary.")
+    print(f"*   The price per trip is {price} \n*   Discounts will be add where necessary.")
 
     print(strings.stars)
     print("*   Would you like to Request our services?")
@@ -56,8 +61,11 @@ def youba():
         # else:
         #     print("*    Please enter a valid destination")
 
+        fare = fair_calculation.calculate_fare(passenger_phone_num, price, passengers)
+        a_queue_list = make_av_queues()
+        
         request_taxi(passenger_phone_num, passenger_location,
-                     passenger_destination, fare, known_passengers, a_queue_list)
+                     passenger_destination, fare, passengers, a_queue_list)
 
         print("\n*   Would you like to Request our services again?")
         print("*   Enter 1 for Yes")

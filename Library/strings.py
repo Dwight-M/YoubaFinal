@@ -91,6 +91,7 @@ edit_number_select_prompt = "Which part of the number would you like to edit? " 
 all_num_format = "Here are all customers' numbers in the format: "\
                     "\nNumber : Failed Attempts"
 
+all_drivers_format = "Here are all drivers and there information: \n"
 
 def validate_yesno_input():
     """
